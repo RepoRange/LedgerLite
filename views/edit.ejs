@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📒LedgerLite - Edit Ledger</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.min.css"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              softblue: {
+                50: "#F0F7FF",
+                100: "#E0EFFE",
+                200: "#BAE0FD",
+                300: "#8CCBFA",
+                400: "#5AB1F7",
+                500: "#2F95F0",
+                600: "#1578D3",
+                700: "#0C5CAA",
+                800: "#094580",
+                900: "#063159",
+              },
+              zinc: {
+                100: "#F4F4F4",
+                200: "#E0E0E0",
+              },
+              blue: {
+                500: "#2F95F0",
+                600: "#1578D3",
+              },
+            },
+          },
+        },
+      };
+
+      // document.addEventListener("DOMContentLoaded", function () {
+      //   // Prevent default Enter key behavior and submit the form
+      //   const form = document.querySelector("form");
+      //   form.addEventListener("keypress", function (event) {
+      //     if (event.key === "Enter") {
+      //       event.preventDefault();
+      //       form.submit();
+      //     }
+      //   });
+      // });
+    </script>
+</head>
+
+<body class="bg-softblue-50 font-sans">
+    <nav class="bg-white shadow-sm">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-2xl font-semibold text-softblue-700">📒LedgerLite</h1>
+            <div class="navlinks flex gap-6">
+                <a class="text-softblue-600 hover:text-softblue-800 transition-colors duration-200" href="/index">Home</a>
+                <a class="text-softblue-600 hover:text-softblue-800 transition-colors duration-200" href="/create">Create New Ledger</a>
+                <a href="/" class="bg-softblue-500 text-white px-4 py-2 rounded-md hover:bg-softblue-600 transition-colors duration-200">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mx-auto px-6 py-8">
+        <h2 class="text-3xl font-bold mb-8 text-softblue-800 text-center">📒<span class="text-softblue-500"><%= title %></span></h2>
+        <p class="text-center mb-8 text-softblue-600">Date: <%= date %></p>
+        <div class="flex justify-center">
+            <form action="/update/<%= id %>" method="post" class="w-full max-w-lg space-y-5">
+                <textarea class="block w-full px-3 py-2 resize-none bg-zinc-200 rounded-md min-h-96 border border-softblue-200 focus:outline-none focus:ring-2 focus:ring-softblue-500"
+                    placeholder="Write your hisaab."
+                    name="content"><%= content %></textarea>
+                <input type="submit" class="block w-full px-5 py-3 bg-softblue-500 text-white rounded-md hover:bg-softblue-600 transition-colors duration-200 cursor-pointer"
+                    value="Update Hisaab">
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

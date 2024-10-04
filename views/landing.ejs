@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📒LedgerLite - Simplify Your Record-Keeping</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        softblue: {
+                            500: '#3B82F6',
+                            600: '#2563EB',
+                            700: '#1D4ED8',
+                            800: '#1E40AF',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col">
+    <nav class="bg-white shadow-sm">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-2xl font-semibold text-softblue-700">📒LedgerLite</h1>
+            <div class="navlinks flex gap-6 items-center">
+               
+                <a href="/login" class="text-softblue-600 hover:text-softblue-800 transition-colors duration-200 border border-softblue-600 px-4 py-2 rounded-md">Login</a>
+                <a href="/signup" class="bg-softblue-500 text-white px-4 py-2 rounded-md hover:bg-softblue-600 transition-colors duration-200">Sign Up</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-grow container mx-auto px-6 py-12">
+        <section class="text-center mb-16">
+            <h2 class="text-4xl font-bold text-gray-800 mb-4">Simplify Your Record-Keeping with LedgerLite</h2>
+            <p class="text-xl text-gray-600 mb-8">Effortlessly manage all your important records and gain valuable insights with our intuitive platform.</p>
+            <a href="/signup" class="bg-softblue-500 text-white px-8 py-3 rounded-md text-lg font-semibold hover:bg-softblue-600 transition-colors duration-200">Get Started for Free</a>
+        </section>
+
+        <section class="grid md:grid-cols-3 gap-8 mb-16">
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-softblue-500 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                </svg>
+                <h3 class="text-xl font-semibold mb-2">Easy Entry</h3>
+                <p class="text-gray-600">Quickly log any type of record with our user-friendly interface.</p>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-softblue-500 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+                <h3 class="text-xl font-semibold mb-2">Smart Insights</h3>
+                <p class="text-gray-600">Gain valuable insights into your data with detailed reports and visualizations.</p>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-softblue-500 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                </svg>
+                <h3 class="text-xl font-semibold mb-2">Secure & Private</h3>
+                <p class="text-gray-600">Your data is encrypted and securely stored, ensuring your privacy.</p>
+            </div>
+        </section>
+
+        <section class="bg-white p-8 rounded-lg shadow-md">
+            <h2 class="text-2xl font-bold mb-4">Why Choose LedgerLite</h2>
+            <ul class="list-disc pl-6 mb-6">
+                <li class="text-gray-700 mb-2">User-friendly interface for quick and easy data entry</li>
+                <li class="text-gray-700 mb-2">Comprehensive dashboard with visual representations of your records</li>
+                <li class="text-gray-700 mb-2">Customizable categories to fit your unique record-keeping needs</li>
+                <li class="text-gray-700 mb-2">Export options for further analysis or reporting</li>
+                <li class="text-gray-700 mb-2">Mobile-friendly design for managing records on-the-go</li>
+            </ul>
+            <p class="text-gray-600 italic">Join thousands of users who have simplified their record-keeping with LedgerLit!</p>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-8 mt-auto">
+        <div class="container mx-auto px-6 text-center">
+            <p>&copy; <%= new Date().getFullYear() %> LedgerLit. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
