@@ -89,8 +89,8 @@ app.post('/login', (req, res, next) => {
             if (err) {
                 return next(err); // Handle errors during login
             }
-            // Set userId in the session
-            req.session.userId = user._id;
+            // Set userId in the session manually since the passport has serialized the user no need to do that
+            //req.session.userId = user._id;
 
             // Authentication successful, flash a success message
             req.flash('success', 'You are successfully logged in!');
