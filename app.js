@@ -1,21 +1,38 @@
 const express = require("express");
+
 const mongoose = require("mongoose")
+
 const passport = require('passport');
+
 const session = require('express-session');
+
 const path = require("path");
+
 const flash = require("express-flash")
+
 const User = require('./models/user');
+
 const Ledger = require('./models/ledger');
+
 const bcrypt = require('bcryptjs');
 
-
-
-
 const connectDB = require('./config/database');
+
 const ledger = require("./models/ledger");
+
 const { log } = require("console");
+
+const cookie = require("express-session/session/cookie");
+
 require('dotenv').config();
+
 require('./config/passport')(passport);
+
+const MongoStore = require('connect-mongo');
+
+const {sendEmail }= require('./config/emailServices');
+
+
 
 
 const app = express();
@@ -30,26 +47,60 @@ app.use(express.urlencoded({ extended: true }));
 
 
 
-app.use(session({ secret: process.env.secret , resave: false, saveUninitialized: false }));
-app.use(passport.initialize());
-app.use(passport.session());
-app.use(flash());
+//session setup to store the session object
+app.use(session({
+    secret: process.env.secret || 'your-secret-key', // Secret for signing session IDs
+    resave: false, // Prevents resaving unmodified sessions
+    saveUninitialized: false, // Don't create session until something stored
+    store: MongoStore.create({
+        mongoUrl: process.env.MONGO_URI, // MongoDB connection string
+        collectionName: 'sessions', // Specify the collection for sessions
+        ttl:  24 * 60 * 60, // Set TTL for sessions (1 day)
+        autoRemove: 'native', // Automatically remove expired sessions
+    }),
+    cookie: {
+        maxAge:  24 * 60 * 60 * 1000 // Session cookie expiration time (1 day)
+    }
+}));
 
-app.set("view engine", "ejs");
+//app.use(session({ secret: process.env.secret || 'your-secret-key', resave: false, saveUninitialized: false }));
+
+
+
+
+app.use(passport.session());//this initiates the deserialization of the user from the session
+
+
+
+
+app.use(flash());//this initializes the flash middleware for flash messages means that we can use req.flash('success', 'Message') to display messages to the user
+
+
+app.set("view engine", "ejs");//this sets the view engine to ejs for rendering the views
+
+
 
 //ensuring the is authenticated
+
+// helper function to ensure the user is authenticated this works after deserialiazation by the passport middleware
 function ensureAuthenticated(req, res, next) {
+    //console.log('Checking authentication status...');
+   // console.log('User:', req.user);
+
     if (req.isAuthenticated()) {
+        //console.log('User is authenticated');
         return next(); // User is authenticated, proceed to the next middleware
     } 
-    // User is not authenticated, redirect to the index page
-    req.flash('error', 'You must be logged in to access this page.');
-    res.redirect('/');
+    
+    console.log('User not authenticated');
+    res.redirect('/login');
 }
+
 
 
 //staritng page
 app.get('/', (req, res) => {
+    
     res.render('landing'); // Redirect to the authentication page
 });
 
@@ -57,11 +108,13 @@ app.get('/login', (req, res) => {
     res.render('login'); // Redirect to the authentication page
 });
 
+
+
+
+
 app.get('/signup', (req, res) => {
     res.render("signup"); // Renders signup.ejs
 });
-
-
 
 //login verifiyng the candida
 app.post('/login', (req, res, next) => {
@@ -89,8 +142,13 @@ app.post('/login', (req, res, next) => {
             if (err) {
                 return next(err); // Handle errors during login
             }
+<<<<<<< HEAD
             // Set userId in the session manually since the passport has serialized the user no need to do that
             //req.session.userId = user._id;
+=======
+            // Set userId in the session
+           // req.session.userId = user._id;
+>>>>>>> f63330d (Update app configuration and dependencies)
 
             // Authentication successful, flash a success message
             req.flash('success', 'You are successfully logged in!');
@@ -102,7 +160,6 @@ app.post('/login', (req, res, next) => {
 
 
 //signup route 
-
 app.post('/signup', async (req, res, next) => {
     try {
         const { firstName, lastName, email, password } = req.body;
@@ -122,7 +179,10 @@ app.post('/signup', async (req, res, next) => {
             if (err) {
                 return next(err); // Handle errors
             }
+
+            sendEmail( firstName,email);
             // Successfully signed up and logged in
+
             return res.redirect('/login');
         });
     } catch (error) {
@@ -131,12 +191,8 @@ app.post('/signup', async (req, res, next) => {
 });
 
 //page rendering
-app.get('/index',ensureAuthenticated ,  async (req, res) => {
-    if (!req.user) {
-        // Redirect to login if no user is logged in
-        return res.redirect('/');
-    }
-
+app.get('/index',ensureAuthenticated ,async(req, res) => {
+    //console.log("in the index");
     try {
         // Fetch ledgers for the logged-in user
         const ledgers = await Ledger.find({ userId: req.user.id }).sort({ date: -1 }); // Sort by date descending
@@ -150,22 +206,25 @@ app.get('/index',ensureAuthenticated ,  async (req, res) => {
 
 // //google oauth route 
 
-app.get('/auth/google', passport.authenticate('google', {
-    scope: ['profile', 'email']
+app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email']
 }));
 
 app.get('/auth/google/callback', 
     passport.authenticate('google', { failureRedirect: '/login' }),
     (req, res) => {
-        // Successful authentication, redirect home.
+        // Successful authentication
+        const userEmail = req.user.email; // Extract the email from the user object
+        const userName = req.user.firstName || req.user.lastName || req.user.displayName; // Adjust based on your user schema
+
+       
+
+        // Send welcome email
+        sendEmail(userName, userEmail);
+
+
         res.redirect('/index');
     }
 );
-
-
-
-
-
 //create page
 app.get('/create', ensureAuthenticated ,  (req, res) => {
     if (!req.user) {
@@ -174,8 +233,6 @@ app.get('/create', ensureAuthenticated ,  (req, res) => {
     }
     res.render("create");
 });
-
-
 // Route to create a ledger entry
 app.post('/createledger', ensureAuthenticated , async (req, res) => {
     try {
@@ -214,9 +271,6 @@ app.post('/createledger', ensureAuthenticated , async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 });
-
-
-
 //route to handle deletion
 app.post('/deleteledger/:id', ensureAuthenticated , async (req, res) => {
     try {
@@ -281,19 +335,59 @@ app.post('/update/:id',ensureAuthenticated ,  async (req, res) => {
     }
 });
 
-//logout
-app.get('/logout', (req, res) => {
-    req.session.destroy((err) => {
-        if (err) {
-            return res.redirect('/'); // Handle error if session destruction fails
-        }
-        res.clearCookie('connect.sid'); // Clears the session cookie
 
-        // Optionally log the user out of their Google account as well
-        // const googleLogoutURL = 'https://accounts.google.com/Logout'; 
-        // res.redirect(googleLogoutURL); // Redirects to Google logout
-    });
-});
+
+//logout
+
+
+app.get('/logout', (req, res) => {
+    console.log('Logout route accessed');
+    
+    if (req.session) {
+      // Get the session ID before destroying the session
+      const sessionId = req.session.id;
+      
+      req.session.destroy((err) => {
+        if (err) {
+          console.error('Error destroying session:', err);
+          return res.status(500).send('Error logging out');
+        }
+        
+        // After destroying the session, remove it from MongoDB
+        if (req.sessionStore.destroy) {
+          req.sessionStore.destroy(sessionId, (destroyErr) => {
+            if (destroyErr) {
+              console.error('Error removing session from MongoDB:', destroyErr);
+            } else {
+              console.log('Session removed from MongoDB');
+            }
+            
+            res.clearCookie('connect.sid'); // Clear the session cookie
+            res.redirect('/login'); // Redirect to login page
+          });
+        } else {
+          console.warn('SessionStore does not have a destroy method');
+          res.clearCookie('connect.sid');
+          res.redirect('/login');
+        }
+      });
+    } else {
+      res.redirect('/login');
+    }
+  });
+
+  
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -27,6 +27,8 @@ module.exports = (passport) => {
         clientID: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
         callbackURL: 'http://localhost:3000/auth/google/callback'
+       // callbackURL: 'https://vf3phkgj-3000.inc1.devtunnels.ms/auth/google/callback'~
+
     }, async (accessToken, refreshToken, profile, done) => {
         try {
             // Check if user already exists
