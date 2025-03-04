@@ -73,7 +73,5 @@ The following packages are essential for the functionality of the LedgerLite app
 
 Contributions are welcome! If you have suggestions for improvements or bug fixes, please feel free to open an issue or submit a pull request.
 
-## License
 
-This project is licensed under the MIT License.
  
