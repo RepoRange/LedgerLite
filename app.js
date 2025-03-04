@@ -1,3 +1,15 @@
+/**
+ * Required External Modules
+ * -----------------------
+ * express: Web application framework
+ * mongoose: MongoDB object modeling tool
+ * passport: Authentication middleware
+ * express-session: Session middleware
+ * bcryptjs: Password hashing
+ * connect-mongo: MongoDB session store
+ * express-flash: Flash messages
+ */
+
 // Core Dependencies
 const express = require("express");
 const mongoose = require("mongoose");
@@ -7,6 +19,15 @@ const path = require("path");
 const flash = require("express-flash");
 const bcrypt = require("bcryptjs");
 const MongoStore = require("connect-mongo");
+
+/**
+ * Custom Module Imports
+ * -------------------
+ * User: User model for authentication
+ * Ledger: Ledger entry model
+ * connectDB: Database connection utility
+ * sendEmail: Email service utility
+ */
 
 // Custom Modules
 const User = require("./models/user");
@@ -23,6 +44,16 @@ const app = express();
 
 // Database Connection
 connectDB();
+
+/**
+ * Middleware Configuration
+ * ----------------------
+ * express.json(): Parse JSON payloads
+ * express.urlencoded(): Parse URL-encoded bodies
+ * session(): Handle user sessions
+ * passport: Handle authentication
+ * flash(): Enable flash messages
+ */
 
 // Middleware Configuration
 // Parse JSON and URL-encoded bodies
@@ -70,6 +101,38 @@ function ensureAuthenticated(req, res, next) {
   console.log("User not authenticated");
   res.redirect("/login");
 }
+
+/**
+ * API Routes Documentation
+ * =====================
+ *
+ * Public Routes
+ * ------------
+ * GET  /         - Landing page
+ * GET  /login    - Login page
+ * GET  /signup   - Signup page
+ *
+ * Authentication Routes
+ * -------------------
+ * POST /login    - Authenticate user
+ *                  body: { email, password }
+ * POST /signup   - Register new user
+ *                  body: { firstName, lastName, email, password }
+ * GET  /auth/google         - Initialize Google OAuth
+ * GET  /auth/google/callback - Handle Google OAuth response
+ *
+ * Protected Routes (require authentication)
+ * --------------------------------------
+ * GET    /index           - Display user's ledger entries
+ * GET    /create         - Show ledger creation form
+ * POST   /createledger   - Create new ledger entry
+ *                         body: { title, content, date }
+ * POST   /deleteledger/:id - Delete specific ledger
+ * GET    /ledger/:id/open  - View/edit specific ledger
+ * POST   /update/:id     - Update ledger content
+ *                         body: { content }
+ * GET    /logout        - Log out user
+ */
 
 /*
  * Public Routes
