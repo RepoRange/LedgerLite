@@ -69,9 +69,7 @@ The following packages are essential for the functionality of the LedgerLite app
 1. **Authenticate using Google**: Click on the "Login with Google" button to authenticate your session.
 2. **Manage Ledger Entries**: Use the provided interface to create, view, edit, or delete your ledger entries.
 
-## Contributing
 
-Contributions are welcome! If you have suggestions for improvements or bug fixes, please feel free to open an issue or submit a pull request.
 
 
  
