@@ -142,13 +142,8 @@ app.post('/login', (req, res, next) => {
             if (err) {
                 return next(err); // Handle errors during login
             }
-<<<<<<< HEAD
             // Set userId in the session manually since the passport has serialized the user no need to do that
             //req.session.userId = user._id;
-=======
-            // Set userId in the session
-           // req.session.userId = user._id;
->>>>>>> f63330d (Update app configuration and dependencies)
 
             // Authentication successful, flash a success message
             req.flash('success', 'You are successfully logged in!');
@@ -394,7 +389,9 @@ app.get('/logout', (req, res) => {
   
 
 
-app.listen(3000);
+app.listen(3000 , ()=>{
+    console.log("app is running in the port 3000")
+});
 
 
 
