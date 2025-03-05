@@ -159,6 +159,11 @@ Session-based authentication is suitable for traditional web applications but ha
 
 Using OAuth 2.0 with Passport.js enables seamless user login via third-party providers like Google while ensuring security through token-based authentication mechanisms.
 
+## Reference
+
+[OAuth 2.0 Concepts ](https://www.passportjs.org/concepts/oauth2/)
+
+[Passport-Google-OAuth](https://www.passportjs.org/packages/passport-google-oauth/)
 
 
 
