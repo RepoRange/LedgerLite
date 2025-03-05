@@ -36,7 +36,7 @@ The following packages are essential for the functionality of the LedgerLite app
 
 1. **Clone the repository**:
     ```bash
-    git clone https://github.com/your-username/LedgerLite.git
+    git clone https://github.com/RepoRange/LedgerLite.git
     ```
 
 2. **Navigate to the project directory**:
