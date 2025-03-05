@@ -163,7 +163,7 @@ Using OAuth 2.0 with Passport.js enables seamless user login via third-party pro
 
 [OAuth 2.0 Concepts ](https://www.passportjs.org/concepts/oauth2/)
 
-[Passport-Google-OAuth](https://www.passportjs.org/packages/passport-google-oauth/)
+[Passport-Google-OAuth](https://www.passportjs.org/packages/passport-google-oauth20/)
 
 
 
