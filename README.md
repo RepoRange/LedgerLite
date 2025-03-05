@@ -27,7 +27,7 @@ The following packages are essential for the functionality of the LedgerLite app
 - **mongoose**: MongoDB object modeling for Node.js, enabling schema-based data modeling.
 - **dotenv**: Module to load environment variables from a `.env` file into `process.env`.
 - **passport**: Authentication middleware for Node.js, used with various strategies.
-- **passport-google-oauth20**: Google OAuth 2.0 authentication strategy for Passport.
+- **passport-google-oauth2.0**: Google OAuth 2.0 authentication strategy for Passport.
 - **express-session**: Middleware for managing sessions in Express applications.
 - **ejs**: Templating engine to render dynamic HTML pages.
 - **tailwindcss**: Utility-first CSS framework for creating responsive designs.
